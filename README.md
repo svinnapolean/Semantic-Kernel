@@ -66,3 +66,60 @@ Final Agentic AI Result:
 ```
 
 ---
+
+
+## 🧠 How to Load and Run an ONNX Model in .NET
+
+### ✅ Prerequisites
+- Install the NuGet package: `Microsoft.ML.OnnxRuntime`
+```bash
+dotnet add package Microsoft.ML.OnnxRuntime
+```
+
+---
+
+### 📦 Code Breakdown
+
+```csharp
+using Microsoft.ML.OnnxRuntime;
+using Microsoft.ML.OnnxRuntime.Tensors;
+
+public class onnxModel {
+    public string load_and_invoke_onnx () {
+        // 1. Load the ONNX model
+        using var session = new InferenceSession(@"D:\source\onnx1\linear_model.onnx");
+
+        // 2. Prepare input tensor (example: x = 7)
+        var inputData = new float[] { 7f };
+        var inputTensor = new DenseTensor<float>(inputData, new int[] { 1, 1 });
+
+        // 3. Create input container
+        var inputs = new List<NamedOnnxValue> {
+            NamedOnnxValue.CreateFromTensor("float_input", inputTensor)
+        };
+
+        // 4. Run inference
+        using var results = session.Run(inputs);
+        var prediction = results.First().AsEnumerable<float>().First();
+
+        return prediction.ToString();
+    }
+}
+```
+
+---
+
+### 🧪 What It Does
+- Loads a local ONNX model (`linear_model.onnx`)
+- Creates a single float input tensor (`x = 7`)
+- Feeds it into the model using `NamedOnnxValue`
+- Runs inference and extracts the first prediction
+
+---
+
+### 📍 Notes
+- `"float_input"` must match the input name defined in the ONNX model.
+- The model path is hardcoded—consider making it configurable.
+- You can extend this to batch inputs or multi-dimensional tensors.
+
+---
