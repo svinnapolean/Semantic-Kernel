@@ -123,3 +123,6 @@ public class onnxModel {
 - You can extend this to batch inputs or multi-dimensional tensors.
 
 ---
+### 📬 Contact
+
+For questions or collaboration, reach out via [LinkedIn](https://www.linkedin.com/in/vincent-napolean-susai) or open an issue.
